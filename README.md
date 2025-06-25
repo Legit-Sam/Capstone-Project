@@ -29,8 +29,9 @@ This project is an admin interface for a mentorship platform built with **React*
 ### Clone the repository
 
 ```bash
-git clone https://github.com/your-username/mentorship-platform.git
-cd mentorship-platform
+git https://github.com/Legit-Sam/Capstone-Project.git
+cd Capstone-Project
+```
 
 Install dependencies
 
@@ -44,6 +45,8 @@ npm install
 cd ../client
 npm install
 
+```
+
 
 Set up environment variables
 Create a .env file in the server directory:
@@ -53,7 +56,7 @@ MONGO_URI=your_mongodb_uri
 JWT_SECRET=your_secret
 
 
-
+```bash
 💻 Run Locally
 # Start backend
 cd server
@@ -63,17 +66,20 @@ npm run dev
 cd client
 npm run dev
 
+```
+
 
 
 📂 Project Structure
 
+```bash
 /client         → React frontend (admin dashboard)
 /server         → Express backend and API routes
   ├── models
   ├── routes
   ├── controllers
   ├── middleware
-
+```
 
   📸 Screenshots
   
