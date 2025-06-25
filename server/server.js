@@ -11,26 +11,24 @@ const requestRoutes = require('./routes/requests');
 const availabilityRoutes = require('./routes/availability');
 const sessionRoutes = require('./routes/sessions');
 const mentorRoutes = require('./routes/mentor');
+const connectDB = require('./config/database');
+
 
 dotenv.config();
 
 const app = express();
 
+const corsOptions = {
+  origin: ['http://localhost:5173', 'https://capstone-project-seven-ecru.vercel.app/'],
+  credentials: true, // Allow cookies to be sent with requests
+};
+
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(cors({
-  origin: 'http://localhost:5173',
-  credentials: true
-}));
+app.use(cors(corsOptions));
 
-// Connect to MongoDB
-mongoose
-  .connect(process.env.MONGO_URI, {
-  })
-  .then(() => console.log('Connected to MongoDB'))
-  .catch(err => console.error('MongoDB connection error:', err));
 
 // Routes
 app.use('/api/auth', authRoutes);
@@ -41,6 +39,9 @@ app.use('/api/availability', availabilityRoutes);
 app.use('/api/sessions', sessionRoutes);
 app.use("/api/mentors", mentorRoutes);
 // Error handling
+
+connectDB();
+
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ error: 'Something went wrong!' });

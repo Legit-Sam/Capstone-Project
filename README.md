@@ -71,19 +71,49 @@ npm run dev
 ## 📂 Project Structure
 
 ```bash
-/client         → React frontend (admin dashboard)
-/server         → Express backend and API routes
-  ├── models
-  ├── routes
-  ├── controllers
-  ├── middleware
+📦 mentorship-platform/
+├── client/                           # React frontend (Vite-based)
+│   ├── public/                       # Static assets (favicon, robots.txt)
+│   ├── src/
+│   │   ├── assets/                   # Images, icons, etc.
+│   │   ├── components/              # Reusable UI components
+│   │   ├── context/                 # React Context (e.g. AuthContext)
+│   │   ├── layouts/                 # Shared layout components (e.g., DashboardLayout)
+│   │   ├── pages/                   # Route-based pages
+│   │   │   ├── admin/
+│   │   │   ├── mentor/
+│   │   │   ├── mentee/
+│   │   ├── services/                # Axios API calls (e.g., mentorServices.js)
+│   │   ├── lib/                   # Helper functions or constants
+│   │   ├── App.jsx                  # Route logic
+│   │   ├── main.jsx                 # Entry point
+│   │   └── index.css                # Global styles
+│   ├── .env                         # Frontend environment config (VITE_*)
+│   ├── vite.config.js               # Vite config
+│   └── package.json
+│
+├── server/                          # Express backend
+│   ├── config/                      # DB config, environment setup
+│   │   └── database.js
+│   ├── controllers/                # Route logic handlers
+│   ├── middleware/                 # Auth, error handling, etc.
+│   ├── models/                     # Mongoose models (User, Availability, Session, Request)
+│   ├── routes/                     # Express routers
+│   ├── utils/                      # Helper utilities (e.g. token, validators)
+│   ├── .env                        # Backend environment config
+│   ├── server.js                   # Entry point
+│   └── package.json
+│
+├── README.md
+└── .gitignore
+
 ```
 
 ---
 
 ## 📸 Screenshots
 
-<!-- Add screenshots here -->
+<!-- TO be added later... -->
 
 ---
 
