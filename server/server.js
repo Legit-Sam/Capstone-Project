@@ -19,7 +19,7 @@ dotenv.config();
 const app = express();
 
 const corsOptions = {
-  origin: ['http://localhost:5173', 'https://capstone-project-seven-ecru.vercel.app/'],
+  origin: ['http://localhost:5173', 'https://capstone-project-seven-ecru.vercel.app'],
   credentials: true, // Allow cookies to be sent with requests
 };
 
