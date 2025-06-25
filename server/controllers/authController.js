@@ -41,12 +41,12 @@ const register = [
           { expiresIn: '1d' }
         );
 
-        res.cookie('jwt', token, {
-          httpOnly: true,
-          secure: process.env.NODE_ENV === 'production',
-          sameSite: 'Lax',
-          maxAge: 24 * 60 * 60 * 1000,
-        });
+       res.cookie('jwt', token, {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === 'production', // 🛡️ HTTPS only in production
+  sameSite: 'None', // 🧭 Required for cross-origin cookies
+  maxAge: 7 * 24 * 60 * 60 * 1000, // optional: 1 week
+});
 
         return res.status(201).json({
           id: user._id,
@@ -106,12 +106,12 @@ const login = [
         { expiresIn: '1d' }
       );
 
-      res.cookie('jwt', token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'Lax',
-        maxAge: 24 * 60 * 60 * 1000,
-      });
+     res.cookie('jwt', token, {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === 'production', // 🛡️ HTTPS only in production
+  sameSite: 'None', // 🧭 Required for cross-origin cookies
+  maxAge: 7 * 24 * 60 * 60 * 1000, // optional: 1 week
+});
 
       res.json({
         id: user._id,
@@ -131,7 +131,7 @@ const logout = (req, res) => {
   res.clearCookie('jwt', {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    sameSite: 'Lax',
+    sameSite: 'None',
   });
   res.json({ message: 'Logged out successfully' });
 };
