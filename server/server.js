@@ -10,6 +10,7 @@ const adminRoutes = require('./routes/admin');
 const requestRoutes = require('./routes/requests');
 const availabilityRoutes = require('./routes/availability');
 const sessionRoutes = require('./routes/sessions');
+const mentorRoutes = require('./routes/mentor');
 
 dotenv.config();
 
@@ -38,6 +39,7 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/requests', requestRoutes);
 app.use('/api/availability', availabilityRoutes);
 app.use('/api/sessions', sessionRoutes);
+app.use("/api/mentors", mentorRoutes);
 // Error handling
 app.use((err, req, res, next) => {
   console.error(err.stack);
