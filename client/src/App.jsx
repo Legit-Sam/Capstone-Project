@@ -6,28 +6,25 @@ import Home from "./pages/HomePage";
 import Login from "./pages/LoginPage";
 import Register from "./pages/RegisterPage";
 
-
 // Layout
 import DashboardLayout from "./layouts/DashboardLayout";
 
 // Common Dashboard Pages
 import Dashboard from "./pages/Dashboard";
-
-// User Profile
 import EditProfile from "./pages/EditProfile";
-
 
 // Mentee Pages
 import Mentors from "./pages/mentee/Mentors";
 import MyRequests from "./pages/mentee/MyRequests";
 import MySessions from "./pages/mentee/MySessions";
+import MentorProfile from './pages/mentor/MentorProfile'; // 🧠 Moved to mentee folder
 
 // Mentor Pages
 import MentorRequests from "./pages/mentor/MentorRequests";
 import MentorAvailability from "./pages/mentor/MentorAvailability";
 import MentorSessions from "./pages/mentor/MentorSessions";
 
-//Admin Pages
+// Admin Pages
 import ManageUsersPage from "./pages/admin/ManageUsersPage";
 import MatchesPage from "./pages/admin/MatchesPage";
 import SessionStatsPage from "./pages/admin/SessionStatsPage";
@@ -56,21 +53,22 @@ function App() {
         element={user ? <EditProfile /> : <Navigate to="/login" />}
       />
 
-      {/* Protected Dashboard Routes */}
+      {/* Protected Routes */}
       {user && (
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<Dashboard />} />
 
-          {/* Mentee-specific Routes */}
+          {/* Mentee Routes */}
           {isMentee && (
             <>
               <Route path="mentors" element={<Mentors />} />
+              <Route path="mentor/:id" element={<MentorProfile />} /> {/* ✅ Fixed */}
               <Route path="my-requests" element={<MyRequests />} />
               <Route path="my-sessions" element={<MySessions />} />
             </>
           )}
 
-          {/* Mentor-specific Routes */}
+          {/* Mentor Routes */}
           {isMentor && (
             <>
               <Route path="requests" element={<MentorRequests />} />
@@ -79,19 +77,19 @@ function App() {
             </>
           )}
 
-         {/* Admin-specific Routes */}
-{isAdmin && (
-  <>
-    <Route path="admin/users" element={<ManageUsersPage />} />
-    <Route path="admin/matches" element={<MatchesPage />} />
-    <Route path="admin/sessions" element={<SessionStatsPage />} />
-  </>
-)}
+          {/* Admin Routes */}
+          {isAdmin && (
+            <>
+              <Route path="admin/users" element={<ManageUsersPage />} />
+              <Route path="admin/matches" element={<MatchesPage />} />
+              <Route path="admin/sessions" element={<SessionStatsPage />} />
+            </>
+          )}
         </Route>
       )}
 
-      {/* Optional fallback route */}
-      {/* <Route path="*" element={<Navigate to="/" />} /> */}
+      {/* Catch-all Route */}
+      <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );
 }
