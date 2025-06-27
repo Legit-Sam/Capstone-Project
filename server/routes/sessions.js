@@ -5,6 +5,7 @@ const {
   getMySessions,
   submitFeedback
 } = require('../controllers/sessionController');
+const Session = require('../models/Session');
 
 const router = express.Router();
 
