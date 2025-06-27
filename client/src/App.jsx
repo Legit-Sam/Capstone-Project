@@ -28,6 +28,7 @@ import MentorSessions from "./pages/mentor/MentorSessions";
 import ManageUsersPage from "./pages/admin/ManageUsersPage";
 import MatchesPage from "./pages/admin/MatchesPage";
 import SessionStatsPage from "./pages/admin/SessionStatsPage";
+import CompletedSessions from "./components/CompletedSessions";
 
 function App() {
   const { user } = useAuth();
@@ -74,6 +75,7 @@ function App() {
               <Route path="requests" element={<MentorRequests />} />
               <Route path="availability" element={<MentorAvailability />} />
               <Route path="sessions" element={<MentorSessions />} />
+               <Route path="completed-sessions" element={<CompletedSessions />} />
             </>
           )}
 

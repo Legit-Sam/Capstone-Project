@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import {
-  Home, Users, Calendar, UserCheck, List, Settings, User,
+  Home, Users, Calendar, UserCheck, List, Settings, User, Star
 } from "lucide-react";
 
 const Sidebar = ({ onNavigate }) => {
@@ -50,6 +50,9 @@ const Sidebar = ({ onNavigate }) => {
               </NavLink>
               <NavLink to="/dashboard/sessions" onClick={onNavigate} className={({ isActive }) => `${linkClass} ${isActive ? activeClass : ""}`}>
                 <Calendar size={18} /> Sessions
+              </NavLink>
+               <NavLink to="/dashboard/completed-sessions" onClick={onNavigate} className={({ isActive }) => `${linkClass} ${isActive ? activeClass : ""}`}>
+                <Star size={18} /> My Completed Sessions
               </NavLink>
             </>
           )}
