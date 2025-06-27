@@ -211,6 +211,19 @@ const submitFeedback = async (req, res) => {
   }
 };
 
+const getCompletedSessions = async (req, res) => {
+  try {
+    const sessions = await Session.find({
+      mentorId: req.user.id,
+      status: 'COMPLETED'
+    }).populate('menteeId', 'profile');
+
+    res.json(sessions);
+  } catch (err) {
+    console.error('Error fetching completed sessions:', err);
+    res.status(500).json({ error: 'Failed to fetch completed sessions' });
+  }
+}
 
 
 
@@ -218,5 +231,6 @@ const submitFeedback = async (req, res) => {
 module.exports = {
   scheduleSession,
   getMySessions,
-  submitFeedback
+  submitFeedback,
+  getCompletedSessions
 };
