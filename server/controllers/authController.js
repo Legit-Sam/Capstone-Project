@@ -42,10 +42,10 @@ const register = [
         );
 
        res.cookie('jwt', token, {
-  httpOnly: true,
-  secure: process.env.NODE_ENV === 'production', // 🛡️ HTTPS only in production
-  sameSite: 'None', // 🧭 Required for cross-origin cookies
-  maxAge: 7 * 24 * 60 * 60 * 1000, // optional: 1 week
+       httpOnly: true,
+      secure: process.env.NODE_ENV === 'production', // 🛡️ HTTPS only in production
+      sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax', // 🧭 Required for cross-origin cookies
+     maxAge: 60 * 60 * 1000, // ✅ 1 hour in milliseconds
 });
 
         return res.status(201).json({
@@ -107,10 +107,10 @@ const login = [
       );
 
      res.cookie('jwt', token, {
-  httpOnly: true,
-  secure: process.env.NODE_ENV === 'production', // 🛡️ HTTPS only in production
-  sameSite: 'None', // 🧭 Required for cross-origin cookies
-  maxAge: 7 * 24 * 60 * 60 * 1000, // optional: 1 week
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production', // 🛡️ HTTPS only in production
+      sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax', // 🧭 Required for cross-origin cookies
+     maxAge: 60 * 60 * 1000, // ✅ 1 hour in milliseconds
 });
 
       res.json({
