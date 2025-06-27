@@ -111,10 +111,11 @@ npm run dev
 
 ---
 
-## 📸 Screenshots
+## 📸 Video URL
+```bash
+https://drive.google.com/file/d/1Mzfkf9wg9848vm6poyXJU-so3D8UUlrt/view?usp=sharing
 
-<!-- TO be added later... -->
-
+```
 ---
 
 ## ✍️ License

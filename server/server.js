@@ -39,7 +39,7 @@ app.use('/api/availability', availabilityRoutes);
 app.use('/api/sessions', sessionRoutes);
 app.use("/api/mentors", mentorRoutes);
 // Error handling
-
+//connect to mongodb database
 connectDB();
 
 app.use((err, req, res, next) => {
