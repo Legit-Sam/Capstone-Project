@@ -8,6 +8,7 @@ import {
   BarChart,
   ClipboardList,
   Settings,
+  Star
 } from "lucide-react";
 
 const cardData = {
@@ -49,6 +50,12 @@ const cardData = {
       title: "Sessions",
       description: "See all your upcoming mentoring sessions.",
       link: "/dashboard/sessions",
+    },
+    {
+      icon: Star,
+      title: "Completed Sessions",
+      description: "View feedback and ratings from completed sessions.",
+      link: "/dashboard/completed-sessions",
     },
   ],
   ADMIN: [
