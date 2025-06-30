@@ -1,19 +1,24 @@
-// server/controllers/adminController.js
 const { body, validationResult } = require('express-validator');
 const User = require('../models/User');
 const Availability = require('../models/Availability');
 const MentorshipRequest = require('../models/MentorshipRequest');
 const Session = require('../models/Session');
+
 // GET /admin/users
 const listUsers = async (req, res) => {
   try {
-    const users = await User.find({ _id: { $ne: req.user.id } }).select('-password');
-    res.json(users);
+  const users = await User.find({ _id: { $ne: req.user.id } }).select('-password');
+
+const response = users.map((u) => ({
+  ...u.toObject(),
+  isSystemAdmin: u.email === process.env.ADMIN_EMAIL
+}));
+
+res.json(response);
   } catch (err) {
     res.status(500).json({ error: 'Server error' });
   }
 };
-
 
 // PUT /admin/users/:id/role
 const updateUserRole = [
@@ -29,28 +34,42 @@ const updateUserRole = [
     const { role } = req.body;
 
     try {
+      const targetUser = await User.findById(req.params.id);
+      if (!targetUser) {
+        return res.status(404).json({ error: 'Target user not found' });
+      }
+
+      const targetEmail = targetUser.email?.toLowerCase();
+      const requesterEmail = req.user.email?.toLowerCase();
+      const systemAdminEmail = process.env.ADMIN_EMAIL?.toLowerCase();
+
+      // Prevent changing the system admin role — even by the system admin
+      if (targetEmail === systemAdminEmail && role !== 'ADMIN') {
+        return res.status(403).json({ error: 'System admin role cannot be changed' });
+      }
+
+      // Prevent self-demotion
       if (req.user.id === req.params.id && role !== 'ADMIN') {
         return res.status(400).json({ error: "You can't remove your own admin access" });
       }
 
-      const user = await User.findByIdAndUpdate(
+      const updatedUser = await User.findByIdAndUpdate(
         req.params.id,
         { role, updatedAt: Date.now() },
         { new: true, runValidators: true }
       ).select('-password');
 
-      if (!user) {
-        return res.status(404).json({ error: 'User not found' });
-      }
-
-      res.json(user);
+      res.json(updatedUser);
     } catch (err) {
+      console.error('Role update error:', err);
       res.status(500).json({ error: 'Server error' });
     }
   }
 ];
 
-// Get a mentor's availability
+
+
+// GET /admin/mentor/:mentorId/availability
 const getMentorAvailability = async (req, res) => {
   const { mentorId } = req.params;
 
@@ -68,8 +87,7 @@ const getMentorAvailability = async (req, res) => {
   }
 };
 
-
-// 2. View all mentorship matches (accepted only)
+// GET /admin/matches
 const getAllMatches = async (req, res) => {
   try {
     const matches = await MentorshipRequest.find()
@@ -81,8 +99,7 @@ const getAllMatches = async (req, res) => {
   }
 };
 
-
-// Updated GET /admin/session-stats controller
+// GET /admin/session-stats
 const getSessionStats = async (req, res) => {
   try {
     const totalSessions = await Session.countDocuments();
@@ -107,8 +124,7 @@ const getSessionStats = async (req, res) => {
   }
 };
 
-
-// 4. Manually assign mentor to mentee
+// POST /admin/assign-mentor
 const assignMentor = async (req, res) => {
   const { mentorId, menteeId } = req.body;
 
@@ -150,4 +166,11 @@ const assignMentor = async (req, res) => {
   }
 };
 
-module.exports = { listUsers, updateUserRole, getMentorAvailability, getAllMatches, getSessionStats, assignMentor };
+module.exports = {
+  listUsers,
+  updateUserRole,
+  getMentorAvailability,
+  getAllMatches,
+  getSessionStats,
+  assignMentor
+};

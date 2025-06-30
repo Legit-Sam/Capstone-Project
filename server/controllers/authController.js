@@ -19,6 +19,8 @@ const register = [
 
     const { email, password, role } = req.body;
 
+    
+
     try {
       const existingUser = await User.findOne({ email });
       if (existingUser) {
